@@ -15,6 +15,16 @@ namespace ConsoleBooksApp
             BookCollection collection = new BookCollection();
             Book book = new Book("Title", "author", "genre", DateTime.Now, 150, 20);
             collection.AddBook(book);
+            try
+            {
+                collection.AddBook(book);
+            }
+            catch (Exception ex)
+            {
+                
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
+            }
             collection.SaveBooks();
             BookCollection resCollection = new BookCollection();
             File.Create("Collection");
