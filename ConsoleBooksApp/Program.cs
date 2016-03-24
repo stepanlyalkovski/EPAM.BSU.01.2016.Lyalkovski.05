@@ -14,6 +14,7 @@ namespace ConsoleBooksApp
         {
             BookCollection collection = new BookCollection();
             Book book = new Book("Title", "author", "genre", DateTime.Now, 150, 20);
+            Book book1 = new Book("NewTitle", "author", "genre", DateTime.Now, 150, 20);
             collection.AddBook(book);
             try
             {
@@ -22,6 +23,16 @@ namespace ConsoleBooksApp
             catch (Exception ex)
             {
                 
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
+            }
+            try
+            {
+                collection.RemoveBook(book1);
+            }
+            catch (Exception ex)
+            {
+
                 Console.WriteLine(ex.Message);
                 Console.WriteLine(ex.StackTrace);
             }

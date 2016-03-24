@@ -34,7 +34,7 @@ namespace BooksCollection
             if (object.ReferenceEquals(null, book))
                 throw new NoNullAllowedException();
 
-            if (books.Remove(book))
+            if (!books.Remove(book))
             {
                 logger.Warn($"book {book.Title} is not found");
                 throw new BookIsNotFoundException();

@@ -52,7 +52,7 @@ namespace BooksCollection
 
         public void SaveBookCollection(List<Book> books)
         {
-            logger.Info($"Save books to {booksFile.Directory}");
+            logger.Info($"Save books to \"{booksFile.Directory}\" ");
 
             File.Delete(booksFile.FullName);
             using (var binaryWriter = new BinaryWriter(booksFile.Create()))
