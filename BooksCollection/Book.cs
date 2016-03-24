@@ -9,8 +9,8 @@ namespace BooksCollection
     public class Book : IEquatable<Book>
     {
         public string Title { get; }
-        public List<string> Authors { get; }
-        public List<string> Genres { get; }
+        public string Author { get; }
+        public string Genre { get; }
         public DateTime PublishDate { get; }
         public int Pages { get; }
         public decimal Price { get; }
@@ -19,11 +19,11 @@ namespace BooksCollection
         {
         }
 
-        public Book(string title, List<string> authors, List<string> genres, DateTime publishDate, int pages, decimal price)
+        public Book(string title, string author, string genre, DateTime publishDate, int pages, decimal price)
         {
             Title = title;
-            Authors = authors;
-            Genres = genres;
+            Author = author;
+            Genre = genre;
             PublishDate = publishDate;
             Pages = pages;
             Price = price;
@@ -45,8 +45,8 @@ namespace BooksCollection
             if (ReferenceEquals(this, other)) return true;
 
             return string.Equals(Title, other.Title)
-                   && Authors.SequenceEqual(other.Authors)
-                   && Genres.SequenceEqual(other.Genres)
+                   && Author.Equals(other.Author)
+                   && Genre.Equals(other.Genre)
                    && PublishDate.Equals(other.PublishDate)
                    && Pages == other.Pages
                    && Price == other.Price;
@@ -57,8 +57,8 @@ namespace BooksCollection
             unchecked
             {
                 var hashCode = (Title != null ? Title.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ (Authors != null ? Authors.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ (Genres != null ? Genres.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Author != null ? Author.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Genre != null ? Genre.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ PublishDate.GetHashCode();
                 hashCode = (hashCode * 397) ^ Pages;
                 hashCode = (hashCode * 397) ^ Price.GetHashCode();
