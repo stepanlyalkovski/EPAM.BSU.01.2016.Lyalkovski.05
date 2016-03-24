@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using NLog;
 
 namespace BooksCollection
 {
     public class BinaryFileStorage : IBooksStorage
     {
         private FileInfo booksFile;
+        private static Logger logger = LogManager.GetCurrentClassLogger();
 
         public BinaryFileStorage() : this(new FileInfo("books"))
         {
@@ -27,7 +29,9 @@ namespace BooksCollection
 
         public List<Book> LoadBookCollection()
         {
+            logger.Info($"Load books from {booksFile.Directory}");
             List<Book> books = new List<Book>();
+            
             using (var binaryReader = new BinaryReader(booksFile.OpenRead()))
             {
                 while (binaryReader.PeekChar() > -1)
@@ -42,11 +46,14 @@ namespace BooksCollection
                 }
                 
             }
+            logger.Info("Books has been loaded");
             return books;
         }
 
         public void SaveBookCollection(List<Book> books)
         {
+            logger.Info($"Save books to {booksFile.Directory}");
+
             File.Delete(booksFile.FullName);
             using (var binaryWriter = new BinaryWriter(booksFile.Create()))
             {
@@ -60,6 +67,7 @@ namespace BooksCollection
                     binaryWriter.Write(book.Price);
                 }
             }
+            logger.Info("Books has been saved");
         }
     }
 }

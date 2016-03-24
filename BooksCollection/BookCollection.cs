@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Xml.Linq;
+using NLog;
 
 namespace BooksCollection
 {
@@ -9,14 +11,19 @@ namespace BooksCollection
     {
         private List<Book> books = new List<Book>();
         private IBooksStorage bookStorage = new BinaryFileStorage();
+        private static Logger logger = LogManager.GetCurrentClassLogger();
 
         public void AddBook(Book book)
         {
             if (object.ReferenceEquals(null, book))
-                throw new NullReferenceException();
+                throw new NoNullAllowedException();
 
             if (books.Contains(book))
+            {
+                logger.Warn($"book {book.Title} is already exist");
                 throw new BookIsAlreadyExistException("Book is already exist in this collection!");
+            }
+           
 
             books.Add(book);
              
@@ -25,10 +32,14 @@ namespace BooksCollection
         public void RemoveBook(Book book)
         {
             if (object.ReferenceEquals(null, book))
-                throw new NullReferenceException();
+                throw new NoNullAllowedException();
 
             if (books.Remove(book))
+            {
+                logger.Warn($"book {book.Title} is not found");
                 throw new BookIsNotFoundException();
+            }
+            
         }
 
         public Book FindByTag(string title)
