@@ -16,7 +16,7 @@ namespace BooksCollection
                 throw new NullReferenceException();
 
             if (books.Contains(book))
-                return;
+                throw new BookIsAlreadyExistException("Book is already exist in this collection!");
 
             books.Add(book);
              
@@ -28,12 +28,24 @@ namespace BooksCollection
                 throw new NullReferenceException();
 
             if (books.Remove(book))
-                return;
+                throw new BookIsNotFoundException();
         }
 
         public Book FindByTag(string title)
         {
             Book searchedBook = books.FirstOrDefault(b => b.Title == title);
+            return searchedBook;
+        }
+
+        public Book FindByTag(string title, string author)
+        {
+            Book searchedBook = books.FirstOrDefault(b => b.Author == author && b.Title == title);
+            return searchedBook;
+        }
+
+        public Book FindByTag(decimal price)
+        {
+            Book searchedBook = books.FirstOrDefault(b => b.Price == price);
             return searchedBook;
         }
 

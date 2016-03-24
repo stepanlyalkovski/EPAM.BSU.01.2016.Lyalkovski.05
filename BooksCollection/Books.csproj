@@ -43,6 +43,7 @@
     <Compile Include="BinaryFileStorage.cs" />
     <Compile Include="Book.cs" />
     <Compile Include="BookCollection.cs" />
+    <Compile Include="BookExceptions.cs" />
     <Compile Include="IBooksStorage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
