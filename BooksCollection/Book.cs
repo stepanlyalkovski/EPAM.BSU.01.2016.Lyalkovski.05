@@ -15,10 +15,6 @@ namespace BooksCollection
         public int Pages { get; }
         public decimal Price { get; }
 
-        public Book()
-        {
-        }
-
         public Book(string title, string author, string genre, DateTime publishDate, int pages, decimal price)
         {
             Title = title;

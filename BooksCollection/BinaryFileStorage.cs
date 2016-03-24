@@ -35,9 +35,9 @@ namespace BooksCollection
                     string title = binaryReader.ReadString();
                     string author = binaryReader.ReadString();
                     string genre = binaryReader.ReadString();
-                    DateTime date = DateTime.Parse(binaryReader.ReadString());
+                    DateTime date = DateTime.FromFileTime(binaryReader.ReadInt64());
                     int pages = binaryReader.ReadInt32();
-                    int price = binaryReader.ReadInt32();
+                    decimal price = binaryReader.ReadDecimal();
                     books.Add(new Book(title, author, genre, date, pages, price));
                 }
                 
@@ -47,6 +47,7 @@ namespace BooksCollection
 
         public void SaveBookCollection(List<Book> books)
         {
+            File.Delete(booksFile.FullName);
             using (var binaryWriter = new BinaryWriter(booksFile.Create()))
             {
                 foreach (var book in books)
@@ -54,7 +55,7 @@ namespace BooksCollection
                     binaryWriter.Write(book.Title);
                     binaryWriter.Write(book.Author);
                     binaryWriter.Write(book.Genre);
-                    binaryWriter.Write(book.PublishDate.ToString(CultureInfo.InvariantCulture));
+                    binaryWriter.Write(book.PublishDate.ToFileTime());
                     binaryWriter.Write(book.Pages);
                     binaryWriter.Write(book.Price);
                 }

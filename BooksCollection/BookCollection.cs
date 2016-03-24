@@ -19,7 +19,7 @@ namespace BooksCollection
                 return;
 
             books.Add(book);
-
+             
         }
 
         public void RemoveBook(Book book)
