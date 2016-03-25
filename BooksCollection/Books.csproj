@@ -44,11 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BinaryFileStorage.cs" />
+    <Compile Include="BinaryBookRepository.cs" />
     <Compile Include="Book.cs" />
-    <Compile Include="BookCollection.cs" />
+    <Compile Include="BookService.cs" />
     <Compile Include="BookExceptions.cs" />
-    <Compile Include="IBooksStorage.cs" />
+    <Compile Include="IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -6,16 +6,16 @@ using NLog;
 
 namespace BooksCollection
 {
-    public class BinaryFileStorage : IBooksStorage
+    public class BinaryBookRepository : IRepository
     {
         private FileInfo booksFile;
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public BinaryFileStorage() : this(new FileInfo("books"))
+        public BinaryBookRepository() : this(new FileInfo("books"))
         {
         }
 
-        public BinaryFileStorage(FileInfo file)
+        public BinaryBookRepository(FileInfo file)
         {
             if (file == null)
                 throw new ArgumentNullException();
@@ -27,7 +27,7 @@ namespace BooksCollection
 
         }
 
-        public List<Book> LoadBookCollection()
+        public IEnumerable<Book> Load()
         {
             logger.Info($"Load books from {booksFile.Directory}");
             List<Book> books = new List<Book>();
@@ -50,7 +50,7 @@ namespace BooksCollection
             return books;
         }
 
-        public void SaveBookCollection(List<Book> books)
+        public void Save(List<Book> books)
         {
             logger.Info($"Save books to \"{booksFile.Directory}\" ");
 
