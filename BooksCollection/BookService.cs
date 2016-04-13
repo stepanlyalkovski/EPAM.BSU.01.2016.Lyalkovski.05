@@ -9,14 +9,14 @@ namespace BooksCollection
 {
     public class BookService
     {
-        private List<Book> bookList;
-        private readonly IRepository repository;
+        private List<Book> _bookList;
+        private readonly IBookRepository _bookRepository;
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public BookService(IEnumerable<Book> bookList, IRepository repository)
+        public BookService(IEnumerable<Book> bookList, IBookRepository _bookRepository)
         {
-            this.bookList = bookList.ToList();
-            this.repository = repository;
+            this._bookList = bookList.ToList();
+            this._bookRepository = _bookRepository;
         }
 
         public void AddBook(Book book)
@@ -24,13 +24,13 @@ namespace BooksCollection
             if (object.ReferenceEquals(null, book))
                 throw new NoNullAllowedException();
 
-            if (bookList.Contains(book))
+            if (_bookList.Contains(book))
             {
                 logger.Warn($"book {book.Title} is already exist");
                 throw new BookIsAlreadyExistException("Book is already exist in this collection!");
             }
 
-            bookList.Add(book);
+            _bookList.Add(book);
         }
 
         public void RemoveBook(Book book)
@@ -38,7 +38,7 @@ namespace BooksCollection
             if (object.ReferenceEquals(null, book))
                 throw new NoNullAllowedException();
 
-            if (!bookList.Remove(book))
+            if (!_bookList.Remove(book))
             {
                 logger.Warn($"book {book.Title} is not found");
                 throw new BookIsNotFoundException();
@@ -46,21 +46,26 @@ namespace BooksCollection
 
         }
 
+        public IList<Book> GetAll()
+        {
+            return new List<Book>(_bookList);
+        }
+
         public Book FindByTag(string title)
         {
-            Book searchedBook = bookList.FirstOrDefault(b => b.Title == title);
+            Book searchedBook = _bookList.FirstOrDefault(b => b.Title == title);
             return searchedBook;
         }
 
         public Book FindByTag(string title, string author)
         {
-            Book searchedBook = bookList.FirstOrDefault(b => b.Author == author && b.Title == title);
+            Book searchedBook = _bookList.FirstOrDefault(b => b.Author == author && b.Title == title);
             return searchedBook;
         }
 
         public Book FindByTag(decimal price)
         {
-            Book searchedBook = bookList.FirstOrDefault(b => b.Price == price);
+            Book searchedBook = _bookList.FirstOrDefault(b => b.Price == price);
             return searchedBook;
         }
 
@@ -81,7 +86,7 @@ namespace BooksCollection
 
         public void SortBooksByTag(IComparer<Book> comparer)
         {
-            bookList.Sort(comparer);
+            _bookList.Sort(comparer);
         }
 
         public void SortBooksByTag(Comparison<Book> comparison)
@@ -90,9 +95,9 @@ namespace BooksCollection
             SortBooksByTag(compAdapter);
         }
 
-        public void SaveBooks() => repository.Save(bookList);
+        public void SaveBooks() => _bookRepository.Save(_bookList);
 
-        public void LoadBooks() => bookList = repository.Load().ToList();
+        public void LoadBooks() => _bookList = _bookRepository.Load().ToList();
 
     }
 

@@ -3,17 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace BooksCollection
 {
+    [Serializable]
     public class Book : IEquatable<Book>
     {
-        public string Title { get; }
-        public string Author { get; }
-        public string Genre { get; }
-        public DateTime PublishDate { get; }
-        public int Pages { get; }
-        public decimal Price { get; }
+        [XmlAttribute ("title")]
+        public string Title { get; set; }
+
+        public string Author { get; set; }
+        public string Genre { get; set; }
+        public DateTime PublishDate { get; set; }
+        public int Pages { get; set; }
+        public decimal Price { get; set; }
+
+        public Book()
+        {
+        }
 
         public Book(string title, string author, string genre, DateTime publishDate, int pages, decimal price)
         {

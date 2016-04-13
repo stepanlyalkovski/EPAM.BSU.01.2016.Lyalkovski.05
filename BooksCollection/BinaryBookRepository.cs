@@ -6,7 +6,7 @@ using NLog;
 
 namespace BooksCollection
 {
-    public class BinaryBookRepository : IRepository
+    public class BinaryBookRepository : IBookRepository
     {
         private FileInfo booksFile;
         private static Logger logger = LogManager.GetCurrentClassLogger();
@@ -27,7 +27,7 @@ namespace BooksCollection
 
         }
 
-        public IEnumerable<Book> Load()
+        public IList<Book> Load()
         {
             logger.Info($"Load books from {booksFile.Directory}");
             List<Book> books = new List<Book>();
@@ -50,7 +50,7 @@ namespace BooksCollection
             return books;
         }
 
-        public void Save(List<Book> books)
+        public void Save(IList<Book> books)
         {
             logger.Info($"Save books to \"{booksFile.Directory}\" ");
 
